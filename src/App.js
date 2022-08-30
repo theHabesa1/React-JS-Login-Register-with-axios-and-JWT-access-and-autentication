@@ -8,7 +8,7 @@ import Linkpage from "./components/Linkpage";
 import Lounge from "./components/Lounge";
 import Missing from "./components/Missing";
 import Unauthorized from "./components/Unauthorized";
-
+import PersistantLogin from "./components/PersistantLogin";
 import {Routes, Route} from 'react-router-dom'
 import RequireAuth from "./components/RequireAuth";
 
@@ -28,20 +28,21 @@ function App() {
             <Route path="unauthorized" element={<Unauthorized />} />
 
            {/*These are the the protected Routes*/}
-            <Route element={<RequireAuth allowedRoles={[ROLES.User]}/>}>
-              <Route path="/" element={<Home />} />
-            </Route>
-            <Route element={<RequireAuth allowedRoles={[ROLES.Editor]}/>}>
-              <Route path="editor" element={<Editor />} />
-            </Route>
-            <Route element={<RequireAuth allowedRoles={[ROLES.Admin]}/>}>
-              <Route path="admin" element={<Admin />} />s
-            </Route>
+          <Route element={<PersistantLogin/>}>
+              <Route element={<RequireAuth allowedRoles={[ROLES.User]}/>}>
+                <Route path="/" element={<Home />} />
+              </Route>
+              <Route element={<RequireAuth allowedRoles={[ROLES.Editor]}/>}>
+                <Route path="editor" element={<Editor />} />
+              </Route>
+              <Route element={<RequireAuth allowedRoles={[ROLES.Admin]}/>}>
+                <Route path="admin" element={<Admin />} />s
+              </Route>
 
-            <Route element={<RequireAuth allowedRoles={[ROLES.Editor,ROLES.Admin]}/>}>
-              <Route path="lounge" element={<Lounge />} />
+              <Route element={<RequireAuth allowedRoles={[ROLES.Editor,ROLES.Admin]}/>}>
+                <Route path="lounge" element={<Lounge />} />
+              </Route>
             </Route>
-           
 
            {/* catch all */}
            <Route path="*" element={<Missing />} />
